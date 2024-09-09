@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="bicycle, patterns, Copenhagen, social data, analysis, visualization, 02806, DTU, DTU Compute, Social dataanalyse og visualisering, Social data analysis and visualization, Spring 2021">
+
+    <title>Bicycle Patterns | Copenhagen</title>
+
+    <!-- Loading stylesheets -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">  <!-- Google web font "Open Sans" -->
+    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">                <!-- Font Awesome -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">                                      <!-- Bootstrap style -->
+    <link rel="stylesheet" href="css/magnific-popup.css">                                     <!-- Magnific Popup -->
+    <link rel="stylesheet" href="css/style.css">                                              <!-- index style -->
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+          <![endif]-->
+    
+    <!-- Bokeh Dependencies -->
+    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-2.3.1.min.js" integrity="sha384-YF85VygJKMVnHE+lLv2AM93Vbstr0yo2TbIu5v8se5Rq3UQAUmcuh4aaJwNlpKwa" crossorigin="anonymous"></script>
+    <script type="text/javascript">Bokeh.set_log_level("info");</script>
+
+    <!-- Folium Dependencies-->
+    <script>
+        L_NO_TOUCH = false;
+        L_DISABLE_3D = false;
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-timedimension@1.1.1/dist/leaflet.timedimension.control.css"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/iso8601-js-period@0.2.1/iso8601.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-timedimension@1.1.1/dist/leaflet.timedimension.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script type="text/javascript" src="js/folium.js"></script>
+</head>
+<body>  
+        <div class="container-fluid" id="main">
+
+            <!-- Home -->
+            <section class="parallax-window tm-section tm-section-home" id="home" data-parallax="scroll" data-image-src="img/bg-w.jpg">
+                <div class="tm-page-content-width tm-padding-b">
+                    <div class="text-center tm-site-title-wrap">
+                        <h1 class="tm-site-title">Bicycle patterns in Copenhagen</h1>
+                        </div>
+                        <!-- Video frame-->
+                        <div class="vid-video">
+                            <video class="center" width="640" height="480" controls preload="none">
+                                <source src="video/ProjectAssignment.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                             </video>
+                        </div>
+                        
+                        <!-- End of Vimeo frame-->        
+                        <div class="cphrase">In our time, where the threat of global warming is ever-present, sustainable modes<br>of transportation are at the forefront of solutions necessary to curb excess emissions.</div>
+                </div>       
+            </section>
+            <section class="parallax-window tm-section tm-section-home" id="home" data-parallax="scroll" data-image-src="img/bg-01.jpg">
+                <div class="tm-page-content-width tm-padding-b">
+                    <div class="tm-textbox tm-white-bg">                        
+                        <h2 class="tm-green-text tm-section-title">Denmark and bicycles</h2>
+                        <p>The cycling culture in Denmark is almost as old as the bicycle itself. Bikes were first introduced to the country in the 1880s and during the 1920s and 1930s, the bicycle became a symbol of equality and freedom. People of all social classes began biking side by side on their way to work, to a bar, or just the countryside on their days off.
+                        Strøget, the main shopping street in Copenhagen, became pedestrian only in 1962 and in the 70s, ‘Car Free Sundays’ were introduced in Copenhagen, and there were protests demanding that all of Copenhagen became car-free. 
+                        </p>
+                        <p>Today, Denmark is riding in the lead when it comes to using the bikes as an alternative to the cars. That is why it is interesting to investigate these patterns and what affects them. And what better way to do it, than investigating the center of it all - in Copenhagen. So follow us on this journey, where you will discover what affects this cycling culture in Copenhagen and which patterns we can observe among the danish cyclists. Do you think wind plays a role for how many people chooses to bicycle? Has the introduction of "super bike lanes" made more people use their bicycles? Find out below!<br>
+                        <h3>Outline</h3> 
+                            <ul>
+                                <li> No data, no detail</li>
+                                <li> When do people cycle the most?</li>
+                                <li> Impact of the weather</li>
+                                <li> The Super Bike Lanes</li>
+                            </ul>
+                        </p>
+                        <a href="https://deepnote.com/@noah-sturis/Social-Data-Project-6Eu0h4A2QmSuXRzgKXHhkw#" target="_blank" class="tm-btn">View Notebook</a>
+                    </div>    
+                </div>       
+            </section>
+            
+            <!-- Dataset -->
+            <section class="parallax-window tm-section tm-section-services" id="dataset" data-parallax="scroll" data-image-src="img/bg-02.jpg">
+                <div class="tm-page-content-width">
+                    <div class="tm-translucent-white-bg tm-content-box tm-content-box-right tm-textbox-full-height">
+                        <div class="tm-content-box-inner">
+                            <h2 class="tm-section-title tm-green-text">No data, no detail</h2>
+                            <p> In order to conclude or observe anything, we need data. Therefore, this work is based on <a href="https://www.opendata.dk/city-of-copenhagen/faste-cykeltaellinger" target="_blank">bicycle data</a> from various measuring points throughout the Copenhagen Metropolitan Area, between the years 2005 – 2014. On each of these measuring points, sensors are counting how many bikes are passing each hour and their direction - and this is what we will explore!</p>
+                            <p>Having done the initial exploration and cleaning on the complete data set, we ended up with more than five thousand days of data with hourly countings. To the left, you can see where these countings took place and in which years these locations were measured. The years which are not measured for some road are indicated by a missing blue dot. Note that every road is not included in every year! This observation is important to keep in mind when analysing the data. For example, it would not be fair to compare how many people bicycled in 2005 and 2006 by comparing the total count each year, since 2006 measured eight additional locations. </p>
+                            <h3>Fun fact about the data</h3> 
+                            <div class="media tm-media">
+                                <i class="fa fa-2x fa-bar-chart tm-media-icon"></i>    
+                                <div class="media-body tm-media-body">
+                                    <p class="tm-small-font">Some data exploration revealed a fun little detail in the data. In every year, all roads had no countings between 02:00 and 03:00 around end of March and end October. Can you think of a reason behind that? The answer is that we transition between summer and winter time during these dates and hours!</p>       
+                                </div>                                
+                            </div>
+                        </div>                        
+                    </div>                    
+                </div>                
+            </section>
+
+            <!-- Temporal patterns section-->
+            <section class="parallax-window tm-section tm-section-home" id="tempat" data-parallax="scroll" data-image-src="img/bg-w.jpg">
+                <div class="tm-page-content-width tm-padding-b">                
+                    <div class="tm-textbox tm-white-bg">
+                        <h2 class="tm-green-text tm-section-title">When do people cycle the most?</h2>
+                        <p>In this first part, we'll begin by looking into the <b>temporal patterns</b> of the data in order to observe similarities and differences in the data, as well as investigate some of our initial expectations, such as:<br>
+                            <ul>
+                                <li>Weekdays' busiest hours, will be 8am and 16am.</li>
+                                <li>Weekend nights will be busier than usual.</li>
+                                <li>Traffic will be towards the city in the morning.</li>
+                                <li>People ride less during the winter.</li>
+                                <li>Bicycle users' number has increased over time.</li>
+                            </ul>
+                        </p>
+                    </div>
+                    <div class="tm-content-box-right tm-textbox">
+                        <h3>Hourly patterns</h3>
+                        <p>We begin by investigating the hourly patterns. This quickly reveal that on average for all locations, the two most traffic-heavy hours are from 08-09 and from 16-17. In the figure below, we see the average number of bicycles per hour of the day. There are three viewing options, where you by only toggling 'Total' can see this pattern.</p>
+                    </div>
+                        <!-- Bokeh -->
+                        <div class="tm-textbox-wide">
+                            <div class="bk-root" id="a2f53689-76a3-40db-aa3d-f4f3c92e6ef5" data-root-id="1835"></div><br>
+                        </div>
+                        <!-- End of Bokeh -->
+
+                    <div class="tm-content-box-right tm-textbox">
+                        <p>This was also what you would expect as this fits well with the general patterns in the danish society, where lots of people go to and from work, school institutions, etc.</p>
+                        
+                        <br>
+                        <p>But where is everyone heading to? By selecting only one of the other two categories, you can inspect the cyclists going towards the city center or those going away from it. Here things become more interesting, as we see similar patterns to the total distribution, which <b style="color: #0056c7;">was not what we expected!</b><br>For example, when just looking at the traffic away from the city at Dronnings Louises Bro in the plot below, we see that almost no one bicycles out of the city at 08:00-09:00 compared to 16:00-17:00.</p> 
+                        <img src="img/LuBro.png" alt="">
+                        <p>This could imply that the <b style="color: #0056c7;"> direction</b> (of whether people primarily go towards or away from the city), <b style="color: #0056c7;">is very dependent on the specific location</b>.
+                        </p>
+                    </div><br>
+                    <div class="tm-textbox tm-white-bg">
+                        <p>By moving the slider on the interactive map below, we can view the direction of traffic on the bike lanes throughout the day. The color of the bubbles in each location shows whether the dominating <b>direction</b> is <b style="color: blue;">towards</b> or <b style="color: red;">away</b> from the center of Copenhagen. And the size tells "how dominating" either direction is - i.e. the larger the buble, the more the traffic is headed in one direction over the other, whereas small bubles indicate similar amount of traffic in each direction. Note that you can click on any location to show the selected bubble's street name.</p>
+                        <p>
+                        On the interactive map below, it is visible that our new hypothesis from inspecting the plot of Dr. Louises Bro was true. Although the overall traffic around Copenhagen is not dominated by traffic either towards or away from the center - the traffic at each location is typically dominated in either direction at different locations during rush hour around Copenhagen! Moreover, note that if one direction dominated in the morning, typically, the other direction dominated in the afternoon as the bubbles' colors switched!
+                        </p>
+                        <!-- Folium Map Plot 1 -->
+                        <iframe name="iframe2" id="iframe" src="plots/311.html" frameborder="0" border="0" cellspacing="0">
+                        </iframe>
+                        <a href="plots/311.html" target="_blank" class="tm-btn">View full size</a>
+                    </div>  
+                </div>  
+            </section>
+            
+            <section class="parallax-window tm-section tm-section-home" id="tempat2" data-parallax="scroll" data-image-src="img/bg-w.jpg">
+                <div class="tm-page-content-width tm-padding-b">                
+                    <div class="tm-content-box-right tm-textbox">
+                        <h3>Weekly patterns</h3>
+                        <p>During the week, the scene changes. By exploring the data we came to an obvious, yet fun fact. As seen below, Danes seem to bicycle more on some days compared to others based on the 13 measured roads. During the week, the patterns are pretty similar, but on friday afternoons, things slightly change. From the change in the distribution (see circle in plot), it looks like people either leave work earlier, or they choose to stay for a beer and socialize at the company's Friday bar!</p>
+                    </div>
+                    <div>
+                        <img src="img/weekly.png" class="center" alt="Weekly plot" width="initial" style="width:100%">
+                    </div>
+                    <div class="tm-conent-box-right tm-textbox">
+                        <p>If we for a moment just focus on the nights hours of the week (the red bars in the figure), we can recognize an expected pattern where we see that there in general seem to be more activity on the nights of the weekend. This peaked our curiosity in order to see where people are typically headed during the night hours. </p>
+                     
+                        <!-- Folium Map Plot 2 -->
+                        <iframe name="iframe2" id="iframe" src="plots/312.html" frameborder="0" border="0" cellspacing="0">
+                        </iframe>
+                        <a href="plots/312.html" target="_blank" class="tm-btn">View full size</a>
+                        <p></p>
+                        <p style="padding-top: 60px">In the above plot we see the number of bikers at the various locations from Friday midnight to the first 4 hours of Saturday. What's interesting here is how through the hours, the activity in the various spots changes, with Torvegade being the one with the most traffic throughout the day. But during the late-night / early-morning hours, Dr. Louises Bro seem to be the only location with some noteworthy commotion!</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="parallax-window tm-section " itm-section-homed="tempat2" data-parallax="scroll" data-image-src="img/bg-w.jpg">
+                <div class="tm-page-content-width">   
+                    <div class="tm-textbox tm-white-bg">
+                        <h3>Monthly patterns</h3>
+                        <p>Now, let's widen the time-perspective and look at the monthly and seasonal patterns. We want to address the question of whether the month or the different seasons have an impact on how many people choose to use their bikes. In the next plot, it appears that the weeks in December in general have more passing cyclists than other winter months, except from week 51. But this also makes great sense since it is Christmas week, where it is expected that a lot of people travel for the hollidays, while schools, universities and several companies are closed. This might also explain why we also see a similar decrease in July (weeks 27-29) as these are common weeks for travelling abroad for the summer holidays (in the pre-Covid19 era). To conclude, it seems reasonable to hypothesise that there could be a connection to the weather conditions, which we will investigate in the next section. But before we do that, we want to see how patterns develop over the years.</p>
+                        <br>
+                    </div>
+                    
+                    <img src="img/monthly.jpg" class="center" alt="Monthly plot" style="width:100%">
+                <!-- </div>
+            </section> -->
+                      
+            <!-- Yearly Patterns Gallery section -->
+            <!-- <section class="parallax-window tm-section tm-section-gallery tm-flex" id="gallery" data-parallax="scroll" data-image-src="img/bg-w.jpg">
+                <div class="tm-page-content-width tm-flex-col tm-gallery-content"> -->
+                    <div class="tm-content-box-right tm-textbox">
+                        <h3>Yearly patterns</h3>
+                        <p>Now that we consider the yearly patterns, we cannot average across every road anymore, as this would be a biased comparison based on which roads are included in the different years. Therefore, we instead inspect each of the 13 roads over the 10 observed years. As we've seen that both seasonality and weekdays/weekends has an impact on the activity, the comparison should primarily be made between years where most of the 365 days where measured as well as evenly between all four seasons.</p>
+                        <p>In the gallery below, we can see two plots side by side for each of the locations.
+                            <ul> 
+                                <li>On the left side, the plots show how many days during each year the sensor recorded countings - i.e. the closer to the '365 days' bar, the more comparable that year is. Moreover, the size of the colored blocks indicate the distribution between seasons, where these preferably should be equally large.</li>
+                                <li>The years with four equally large blocks and close to the '365 days' limit in the left plot, are compareable on the right side plots. On these right plots, we see the daily number of cyclists counted that year.</li>
+                            </ul>
+                        </p>
+                        <p> Do you see an increasing trend for the compareable years? For most locations we do. However, there are a few examples which implies the opposite - for example take a look at "Fredensbro" in 2013. But this drop actually turned out to be a results of road work. More of these explanations and in-depth analysis of this plot can be found in our <a href="https://deepnote.com/@noah-sturis/Social-Data-Project-6Eu0h4A2QmSuXRzgKXHhkw#" target="_blank">notebook</a>!</p>
+                        <p>To conclude, we see that the data indicates an increasing number of cyclists on these locations.  However, these observations are only based on a few streets and the specified years. Ideally, we would have data from many more roads in order to average across these, and by that would road work and over/under-represented seasons to a larger extent be averaged out. 
+                            
+                        <p>
+                        So how many more bikes do we see on the streets? Well, if we take Tuborgvej as an example, we see that <b style="color: #264d73;">from 2007-2013</b>, the number of cyclists has <b style="color: #264d73;">increased by more than 15%</b>!
+                        Even though it would be tempting to assume that this reflects the exact increase of the bicyclists in Copenhagen, we need to keep in mind that the population of Copenhagen has also increased over the years, which probably accounts for some portion to that increasement. To give some impression, the population of Copenhagen has increased by ~2% from 2007-2013.
+                        </p>
+                        <!-- Add filtered gallery, 3:2 images -->
+                        <br>
+                                               
+                        </div>
+                        <div class="iso-box-section">
+                            <div class="iso-box-wrapper col4-iso-box">
+                                <div class="iso-box website col-6 col-sm-4 col-md-4 col-lg-3 col-xl-3">
+                                    <a href="img/gallery/Aaboulevard.png"><img src="img/gallery/Aaboulevard.png" alt="Åboulevard" class="img-fluid"></a>    
+                                </div>
+                                <div class="iso-box website col-6 col-sm-4 col-md-4 col-lg-3 col-xl-3">
+                                    <a href="img/gallery/Ellebjergvej.png"><img src="img/gallery/Ellebjergvej.png" alt="Ellebjergvej" class="img-fluid"></a>    
+                                </div>
+                                <div class="iso-box website col-6 col-sm-4 col-md-4 col-lg-3 col-xl-3">
+                                    <a href="img/gallery/Englandsvej.png"><img src="img/gallery/Englandsvej.png" alt="Englandsvej" class="img-fluid"></a>
+                                </div>
+                                <div class="iso-box design col-6 col-sm-4 col-md-4 col-lg-3 col-xl-3">
+                                    <a href="img/gallery/Fredensbro.png"><img src="img/gallery/Fredensbro.png" alt="Fredensbro" class="img-fluid"></a>
+                                </div>
+                                <div class="iso-box design col-6 col-sm-4 col-md-4 col-lg-3 col-xl-3">
+                                    <a href="img/gallery/Frederikssundsvej.png"><img src="img/gallery/Frederikssundsvej.png" alt="Frederikssundsvej" class="img-fluid"></a>
+                                </div>
+                                <div class="iso-box design col-6 col-sm-4 col-md-4 col-lg-3 col-xl-3">
+                                    <a href="img/gallery/Hareskovvej.png"><img src="img/gallery/Hareskovvej.png" alt="Hareskovvej" class="img-fluid"></a>
+                                </div>
+                                <div class="iso-box design col-6 col-sm-4 col-md-4 col-lg-3 col-xl-3">
+                                    <a href="img/gallery/Jagtvej.png"><img src="img/gallery/Jagtvej.png" alt="Jagtvej" class="img-fluid"></a>
+                                </div>
+                                <div class="iso-box website col-6 col-sm-4 col-md-4 col-lg-3 col-xl-3">
+                                    <a href="img/gallery/Kalvebod_Brygge.png"><img src="img/gallery/Kalvebod_Brygge.png" alt="Kalvebod Brygge" class="img-fluid"></a>
+                                </div>
+                                <div class="iso-box website col-6 col-sm-4 col-md-4 col-lg-3 col-xl-3">
+                                    <a href="img/gallery/Roskildevej.png"><img src="img/gallery/Roskildevej.png" alt="Roskildevej" class="img-fluid"></a>
+                                </div>
+                                <div class="iso-box artwork col-6 col-sm-4 col-md-4 col-lg-3 col-xl-3">
+                                    <a href="img/gallery/Torvegade.png"><img src="img/gallery/Torvegade.png" alt="Torvegade" class="img-fluid"></a>
+                                </div>
+                                <div class="iso-box design col-6 col-sm-4 col-md-4 col-lg-3 col-xl-3">
+                                    <a href="img/gallery/Tuborgvej.png"><img src="img/gallery/Tuborgvej.png" alt="Tuborgvej" class="img-fluid"></a>
+                                </div>
+                                <div class="iso-box design col-6 col-sm-4 col-md-4 col-lg-3 col-xl-3">
+                                    <a href="img/gallery/Vigerslev_Alle.png"><img src="img/gallery/Vigerslev_Alle.png" alt="Vigerslev_Allé" class="img-fluid"></a>
+                                </div>
+                            </div>     
+                    </div>
+                </div>                
+            </section>
+
+            <!-- Influence of Weather -->
+            <section class="parallax-window tm-section tm-section-services" id="weather" data-parallax="scroll" data-image-src="img/weather-bg.png">
+
+                <div class="tm-page-content-width">
+                    <div class="tm-translucent-white-bg tm-content-box tm-content-box-right">
+                        <div class="tm-content-box-inner">
+                            <h2 class="tm-green-text tm-section-title">Impact of the weather</h2>
+                            <p>Are Danes really vikings when it comes to their biking habits, or can a hard gale hold people back from cycling? In this section, we will explore the relationship between weather patterns and amount of cyclists. We will look into questions such as?<br>
+                                <ul>
+                                    <li>Does temperature play a part in the number of cyclists??</li>
+                                    <li>Do we stop bicycling when its raining?</li>
+                                    <li>Can wind really be a determining factor when you bicycle?</li>
+                                </ul>
+                            </p>
+                            <p>We will look into temperature, precipitation and wind patterns using data from the Danish Meterological Institute provided by DMI's open access <a href="https://confluence.govcloud.dk/display/FDAPI">API</a>. On the left you can see a subset of the data we have from 2005-2014. Temperature is very cyclical on a daily level, whereas precipitation is much more immediate and sudden. Wind speed and direction also change slowly over a daily basis.</p>
+                            <p>We worked with weather and bike data from 2009-2010 (inclusive), as the dataset was complete and reasonable to impute missing values on.</p>
+                        </div>
+                        </div>                        
+                    </div>                    
+                </div>                
+            </section>
+             <!-- Influence of temperature and precipitation -->
+            <section class="parallax-window tm-section tm-section-home" id="tempat2" data-parallax="scroll" data-image-src="img/bg-temp-precip.png">
+                <div class="tm-page-content-width tm-padding-b">                
+                    <div class="tm-textbox tm-white-bg">
+                        <h3>Temperature and rain</h3>
+                        <p>We started by looking into the average amount of cyclists at a fixed hour every day (8:00-9:00) to reduce the variance from whole data set and evenly binned the average number of cyclists depending on the temperature. It is interesting to note that both hot and cold weather seems to scare off Copenhageners! It could also be due to poor visibility during the dark winters and a preponderance for out-of-town-travels during the summer. But what vikings indeed!</p>
+                        <p>We also looked at the precipitation, where we took the whole dataset for the two years and binned manually, as the data wasn't normally distributed. A weird trend seems to show up, where we have a liking for torrential down-pour, but examining further it can be seen that the last intervals are heavy skewed by a lack of samples, which will most likely add a bias.</p>
+                        <p>These visualizations indicate that temperature has an impact on how many people use their bikes. When we trainend an Artificial Neural Network to predict the amount of bicyclists, which can bee seen in the <a href="https://deepnote.com/@noah-sturis/Social-Data-Project-6Eu0h4A2QmSuXRzgKXHhkw#" target="_blank">notebook</a>, we saw that giving the model access to temperature actually helped it make better predictions!</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Influence of wind -->
+            <section class="parallax-window tm-section tm-section-services" id="temperature" data-parallax="scroll" data-image-src="img/bg-wind.png">
+                <div class="tm-page-content-width">
+                    <div class="tm-translucent-white-bg tm-content-box tm-content-box-right tm-textbox-full-height">
+                        <div class="tm-content-box-inner">
+                            <h3>Does the wind really matter?</h3>
+                            <p>And finally, we will look into the man, the myth, the legend – Jakob Haugaard</p>
+                            <p>He is a famous Danish comedian, who at a national election 25+ years ago promised, among other things, 'medvind på cykelstierne' or 'tailwind on the bike-lanes' as an election promise – and got elected! Even though that is a bit of a tall campaign order to fill (and spoiler alert: he didn't succeed), did he have a point?</p>
+                            <p>We looked at a single road – Jagtvej – and looked at one of its directions. When faced with tailwind on Jagtvej more people bicycled on average – and the opposite was true as well! If people tend base their bycicle plans on windsurfer maps, we can't tell you, but it might be that Copenhageners are very intuitive cyclists and choose different routes depending on the weather they encounter?</p>
+                        </div>                      
+                    </div>                    
+                </div>                
+            </section>
+            
+             <!-- Super bike lanes section-->
+             <section class="parallax-window tm-section tm-section-home" id="sbl" data-parallax="scroll" data-image-src="img/sbl.jpg">
+                <div class="tm-page-content-width tm-padding-b">                
+                    <div class="tm-textbox tm-white-bg">
+                        <h2 class="tm-green-text tm-section-title">The Super Bike Lanes</h2>
+                        <p>
+                        We've just seen that there seem to be a general tendency over the years towards people in Copenhagen choosing the bicycle more often. From an environmental perspective this is great news. And even better if we could make even more people ride the bike. Therefore, this has also been an agenda for the danish government, which has started building "supercykelstier" (super bike lanes) all around Copenhagen. The purpose of these roads are to improve the bicycle conditions and thereby make more people choose the bike over less environmental-friendly alternatives. But do the super bike lanes seem to have an impact on the danes' choice of transportation? And if so - to what extent?
+                        </p>
+                        <p>For this we looked at <b>Hareskovvej</b>, as it's the only road in the data that became a super bike lane during the years we have data for. The rest were delivered at a later time, most of them in 2017.</p>
+                        <p>In the figure on the bottom-right, every point is the average number of cyclists in the specified month. Each point on that same month (vertically) refers to the different years. The dots are colored blue if they are <b style="color:#0056c7;">prior</b> to opening of the super bike lane (April 2013) and red if they are <b style="color: red;">after</b>. We've split the plot in two. To the left you see a "fair comparison" where we only compare points with equal number of days. And to the right, we've included all years, also including if some years had more measurements than others.</p>
+                        <p> We can then observe that more bicyclists passed on Hareskovvej at every month and year after the opening of the super bike lane, as every red point is higher up than the blue ones. <b style="color:#264d73;">This implies that the super bike lanes do have an impact on the number of people who choose to use their bicycle!</b></p>   
+                    </div>    
+                </div>       
+            </section>
+
+            <!-- SBL2 -->
+            <section class="parallax-window tm-section tm-section-services" id="SBL2" data-parallax="scroll" data-image-src="img/sbl2.jpg">
+                <div class="tm-page-content-width tm-padding-b">
+                    <div class="tm-textbox tm-white-bg tm-content-box-right">
+                        <div class="tm-content-box-inner"><br>
+                            <br>
+                            <h3>But how much?</h3>
+                            <p>A pessimistic prediction would be that we see an 23% increase in the number of bicyclists on Hareskovvej, after it was introduced as a super bike lane. Note that this "pessimistic" prediction is much higher than the yearly increase in Copenhagen's population since 2005 (≈2%). At the same time, it is also higher than the general increase of cyclists on the streets since 2005 (≈17%).</p> 
+                            <p>A more accuracte prediction would probably be to compute the increase of the average number of cyclists before and after April 2013 on Hareskovvej In relation to this, it is worth mentioning that our work suggest that the government's goal of a 25% increase on the number of cyclists on this super bike lane has been reached! <b style="color:#264d73;">This was said to save 230 tons of CO<sub>2</sub> and 10.1 million DKK, as gain in healthcare economics.</b></p>
+                        </div>                        
+                    </div>                    
+                </div>                
+            </section>
+
+            <section class="parallax-window tm-section tm-section-home" id="tempat2" data-parallax="scroll" data-image-src="img/bg-01l.jpg">
+                <div class="tm-page-content-width tm-padding-b">                
+                    <div class="tm-content-box-right tm-textbox">
+                        <h2 class="tm-green-text tm-section-title" style="padding-top: 10rem;">Conclusion</h2>
+                        <p>Copenhagen is riding towards a greener world. Us "Københavners" use our bikes in all aspects of our life, which leaves our social patterns as traces in bicycle data. We work from 08-17, stay a little longer for a beer on Fridays and typically use Dronning Louises Bro to return home late at night. Danes seem a bit picky with regards to temperature, as they prefer it not being too cold - nor too warm. However, they still seem to have some Viking blood left in, since rain can’t keep them from riding their bikes.</p>
+                        <p>But that is great! Not only does choosing the bike help people travel around in Denmark - it also saves our planet. And even better, we see that more and more people choose the bike, and that government’s actions like super bike lanes makes a difference.<br>
+                        <br>Thank you for reading this - we look forward to see you on the roads!</p>
+                        <br><img src="img/team.jpg" alt="The team">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact -->
+            <section class="parallax-window tm-section tm-section-contact" id="contact" data-parallax="scroll" data-image-src="img/bg-w.jpg">
+                <div class="tm-page-content-width">
+                    <div class="tm-translucent-white-bg tm-textbox tm-content-box tm-textbox-full-height">
+                        <h2 class="tm-section-title tm-green-text">Contact Us</h2>
+                        <p>If you are interested in this project, or in case you found something that needs our attention, you are more than welcome to contact us, using the following form.</p>
+                        
+                        <!-- contact form -->
+                        <form action="cform.php" method="post" class="tm-contact-form">
+                            <div class="form-group">
+                                <input type="text" id="contact_name" name="contact_name" class="form-control" placeholder="Name"  required/>
+                            </div>
+                            <div class="form-group">                                                        
+                                <input type="email" id="contact_email" name="contact_email" class="form-control" placeholder="Email"  required/>
+                            </div>
+                            <div class="form-group">
+                                <textarea id="contact_message" name="contact_message" class="form-control" rows="5" placeholder="Message" required></textarea>
+                            </div>
+                            <button type="submit" class="tm-btn">Send</button>
+                        </form>  
+                    </div>
+                </div>
+                <div class="tm-copyright-div">    
+                <p class="tm-copyright-text">Copyright &copy; <span class="tm-current-year">2021</span> DTU | 02806 - Social Data Analysis and Visualization</p>
+                </div>           
+            </section>
+        </div>
+        
+        <!-- JS Load files -->
+        <script src="js/jquery-1.11.3.min.js"></script>         <!-- https://jquery.com/download/ -->
+        <script src="js/isotope.pkgd.min.js"></script>          <!-- https://isotope.metafizzy.co/ -->
+        <script src="js/imagesloaded.pkgd.min.js"></script>     <!-- https://imagesloaded.desandro.com/ --> 
+        <script src="js/jquery.magnific-popup.min.js"></script> <!-- http://dimsemenov.com/plugins/magnific-popup/ -->
+        <script src="js/parallax.min.js"></script>
+        <script>     
+            $(document).ready(function () {
+                // Isotope for Gallery
+                if ( $('.iso-box-wrapper').length > 0 ) { 
+
+                    var $container  = $('.iso-box-wrapper'), 
+                    $imgs     = $('.iso-box img');
+
+                    $container.imagesLoaded(function () {
+                        $container.isotope({
+                            layoutMode: 'fitRows',
+                            itemSelector: '.iso-box'
+                        });
+                        $imgs.load(function(){
+                            $container.isotope('reLayout');
+                        })
+                    });
+
+                    //filter items on button click
+                    $('.filter-wrapper li a').click(function(){
+                        var $this = $(this), filterValue = $this.attr('data-filter');
+                        $container.isotope({ 
+                            filter: filterValue,
+                            animationOptions: { 
+                                duration: 750, 
+                                easing: 'linear', 
+                                queue: false, 
+                            }                
+                        });             
+
+                        // don't proceed if already selected
+                        if ( $this.hasClass('selected') ) { 
+                            return false; 
+                        }
+
+                        var filter_wrapper = $this.closest('.filter-wrapper');
+                        filter_wrapper.find('.selected').removeClass('selected');
+                        $this.addClass('selected');
+
+                        return false;
+                    });
+                }
+
+                // Magnific Popup for Yearly Patterns Gallery
+                $('.iso-box-wrapper').magnificPopup({
+                    delegate: 'a', // child items selector, by clicking on it popup will open
+                    type: 'image',
+                    gallery:{enabled:true}
+                });
+
+                // Smooth scrolling (https://css-tricks.com/snippets/jquery/smooth-scrolling/)
+                // Select all links with hashes
+                $('a[href*="#"]')
+                  // Remove links that don't actually link to anything
+                  .not('[href="#"]')
+                  .not('[href="#0"]')
+                  .click(function(event) {
+                    // On-page links
+                    if (
+                      location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') 
+                      && 
+                      location.hostname == this.hostname
+                    ) {
+                      // Figure out element to scroll to
+                      var target = $(this.hash);
+                      target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                      // Does a scroll target exist?
+                      if (target.length) {
+                        // Only prevent default if animation is actually gonna happen
+                        event.preventDefault();
+                        $('html, body').animate({
+                          scrollTop: target.offset().top
+                        }, 600, function() {
+                          // Callback after animation
+                          // Must change focus!
+                          var $target = $(target);
+                          $target.focus();
+                          if ($target.is(":focus")) { // Checking if the target was focused
+                            return false;
+                          } else {
+                            $target.attr('tabindex','-1'); // Adding tabindex for elements not focusable
+                            $target.focus(); // Set focus again
+                          };
+                        });
+                      }
+                    }
+                  });
+
+                // Update the current year in copyright
+                $('.tm-current-year').text(new Date().getFullYear());          
+            });
+    </script>
+
+        <!-- Bokeh Script--> 
+        <script src="js/bokeh.js"></script>
+        <script type="application/json" id="2109">
+            {"867b931b-515e-4df1-8051-bb6ca2580e9c":{"defs":[],"roots":{"references":[{"attributes":{},"id":"1846","type":"CategoricalTicker"},{"attributes":{},"id":"1879","type":"Selection"},{"attributes":{"axis":{"id":"1848"},"dimension":1,"ticker":null},"id":"1851","type":"Grid"},{"attributes":{"click_policy":"hide","items":[{"id":"1883"},{"id":"1900"},{"id":"1917"}]},"id":"1882","type":"Legend"},{"attributes":{"fill_alpha":{"value":0.02},"fill_color":{"value":"blue"},"line_alpha":{"value":0.02},"line_color":{"value":"blue"},"top":{"field":"Towards city"},"width":{"value":0.7},"x":{"field":"hour"}},"id":"1887","type":"VBar"},{"attributes":{},"id":"1849","type":"BasicTicker"},{"attributes":{"overlay":{"id":"1858"}},"id":"1854","type":"BoxZoomTool"},{"attributes":{},"id":"1875","type":"CategoricalTickFormatter"},{"attributes":{"fill_alpha":{"value":0.1},"fill_color":{"value":"red"},"line_alpha":{"value":0.1},"line_color":{"value":"red"},"top":{"field":"Away from city"},"width":{"value":0.7},"x":{"field":"hour"}},"id":"1868","type":"VBar"},{"attributes":{"fill_alpha":{"value":0.02},"fill_color":{"value":"green"},"line_alpha":{"value":0.02},"line_color":{"value":"green"},"top":{"field":"Total"},"width":{"value":0.7},"x":{"field":"hour"}},"id":"1904","type":"VBar"},{"attributes":{"data_source":{"id":"1833"},"glyph":{"id":"1902"},"hover_glyph":null,"muted_glyph":{"id":"1904"},"nonselection_glyph":{"id":"1903"},"view":{"id":"1906"}},"id":"1905","type":"GlyphRenderer"},{"attributes":{},"id":"1873","type":"AllLabels"},{"attributes":{"source":{"id":"1833"}},"id":"1889","type":"CDSView"},{"attributes":{"text":"Avg. no. of bikes per hour"},"id":"1836","type":"Title"},{"attributes":{"fill_alpha":{"value":0.1},"fill_color":{"value":"blue"},"line_alpha":{"value":0.1},"line_color":{"value":"blue"},"top":{"field":"Towards city"},"width":{"value":0.7},"x":{"field":"hour"}},"id":"1886","type":"VBar"},{"attributes":{"fill_alpha":{"value":0.1},"fill_color":{"value":"green"},"line_alpha":{"value":0.1},"line_color":{"value":"green"},"top":{"field":"Total"},"width":{"value":0.7},"x":{"field":"hour"}},"id":"1903","type":"VBar"},{"attributes":{"label":{"value":"Towards city"},"renderers":[{"id":"1888"}]},"id":"1900","type":"LegendItem"},{"attributes":{"fill_alpha":{"value":0.7},"fill_color":{"value":"red"},"line_alpha":{"value":0.7},"line_color":{"value":"red"},"top":{"field":"Away from city"},"width":{"value":0.7},"x":{"field":"hour"}},"id":"1867","type":"VBar"},{"attributes":{"bottom_units":"screen","fill_alpha":0.5,"fill_color":"lightgrey","left_units":"screen","level":"overlay","line_alpha":1.0,"line_color":"black","line_dash":[4,4],"line_width":2,"right_units":"screen","syncable":false,"top_units":"screen"},"id":"1858","type":"BoxAnnotation"},{"attributes":{"fill_alpha":{"value":0.02},"fill_color":{"value":"red"},"line_alpha":{"value":0.02},"line_color":{"value":"red"},"top":{"field":"Away from city"},"width":{"value":0.7},"x":{"field":"hour"}},"id":"1869","type":"VBar"},{"attributes":{"axis_label":"Avg. number of passing cyclists","formatter":{"id":"1878"},"major_label_policy":{"id":"1876"},"ticker":{"id":"1849"}},"id":"1848","type":"LinearAxis"},{"attributes":{},"id":"1843","type":"LinearScale"},{"attributes":{},"id":"1855","type":"SaveTool"},{"attributes":{"data_source":{"id":"1833"},"glyph":{"id":"1867"},"hover_glyph":null,"muted_glyph":{"id":"1869"},"nonselection_glyph":{"id":"1868"},"view":{"id":"1871"}},"id":"1870","type":"GlyphRenderer"},{"attributes":{"axis_label":"Hour of the day","formatter":{"id":"1875"},"major_label_policy":{"id":"1873"},"ticker":{"id":"1846"}},"id":"1845","type":"CategoricalAxis"},{"attributes":{"source":{"id":"1833"}},"id":"1906","type":"CDSView"},{"attributes":{"below":[{"id":"1845"}],"center":[{"id":"1847"},{"id":"1851"},{"id":"1882"}],"height":400,"left":[{"id":"1848"},{"id":"1882"}],"renderers":[{"id":"1870"},{"id":"1888"},{"id":"1905"}],"title":{"id":"1836"},"toolbar":{"id":"1859"},"width":800,"x_range":{"id":"1834"},"x_scale":{"id":"1841"},"y_range":{"id":"1839"},"y_scale":{"id":"1843"}},"id":"1835","subtype":"Figure","type":"Plot"},{"attributes":{},"id":"1841","type":"CategoricalScale"},{"attributes":{"data_source":{"id":"1833"},"glyph":{"id":"1885"},"hover_glyph":null,"muted_glyph":{"id":"1887"},"nonselection_glyph":{"id":"1886"},"view":{"id":"1889"}},"id":"1888","type":"GlyphRenderer"},{"attributes":{"data":{"Away from city":{"__ndarray__":"fdxF1sfdREAk3un9Guo7QMKm40pdaDVAPl6UAH5TMUDZt9JWIH8uQE4pqKwsCDVA7aOKElgCUEAsVQrP4NhlQD+wdPQqS29ACTTCn46eYkADH9mmAyBcQOA5/bO4LV5AJ9XjsS8CYUBxzwQ1LsRiQLehHCcUPGdAWEiRtD40b0BFm2W8jDFyQDz+zB4XLm5AURt0pjr1ZUDQkj5E7d5eQMYqC/XLiFdAyc2mLa4YVUAvZg/qxOVSQFaeRZbYSk9A","dtype":"float64","order":"little","shape":[24]},"Total":{"__ndarray__":"KMK37Jh/U0Anx22wZPZJQG/GLT9KzENAt5xS4u8SQEB4F4fVbxM/QFwU3/MjQ0lAR+op7Q8nY0C3Z9bYFRl6QKi1Nq2CbYJAdEFiMCfzdEB2v1X9x8VvQLpTCpkD+nBAZEVcjstkckALaqHWrcdzQMNSwoIPG3hAdy43Nh0pgEAzog+oDm+CQLqf7kz/Ln5AJpJFJvkIdkAMQQJ7psFuQIItdqa6eGdA526xblCpZEAPjta2pCRiQMchILSsSF1A","dtype":"float64","order":"little","shape":[24]},"Towards city":{"__ndarray__":"qfPVnztYRUBrvAb1xNQ8QPtXp5giqTZA+fyPz/94MkBjl28E3X8yQHMKn8O3qz1Au7opagR0VEAROtYSgKRrQAn2BDq8n3NA5oGIhXLZZUDIfuzHfghhQK2rjvMDmWJAktRAKvsiZEBAzDZjWnJlQDJby7XB92lAZCrj64iRcUDFjj6nzf5zQBDEkyX0Y3BAWKaBi0oRaEBcojZJoWxgQGgbUJGcBVlAfs/HKnEXVkCfRljuaVxTQEJtyxcLM09A","dtype":"float64","order":"little","shape":[24]},"hour":["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23"],"index":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]},"selected":{"id":"1879"},"selection_policy":{"id":"1880"}},"id":"1833","type":"ColumnDataSource"},{"attributes":{},"id":"1856","type":"ResetTool"},{"attributes":{},"id":"1853","type":"WheelZoomTool"},{"attributes":{"factors":["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23"]},"id":"1834","type":"FactorRange"},{"attributes":{"active_multi":null,"tools":[{"id":"1852"},{"id":"1853"},{"id":"1854"},{"id":"1855"},{"id":"1856"},{"id":"1857"}]},"id":"1859","type":"Toolbar"},{"attributes":{"label":{"value":"Total"},"renderers":[{"id":"1905"}]},"id":"1917","type":"LegendItem"},{"attributes":{"source":{"id":"1833"}},"id":"1871","type":"CDSView"},{"attributes":{},"id":"1857","type":"HelpTool"},{"attributes":{"fill_alpha":{"value":0.7},"fill_color":{"value":"blue"},"line_alpha":{"value":0.7},"line_color":{"value":"blue"},"top":{"field":"Towards city"},"width":{"value":0.7},"x":{"field":"hour"}},"id":"1885","type":"VBar"},{"attributes":{"label":{"value":"Away from city"},"renderers":[{"id":"1870"}]},"id":"1883","type":"LegendItem"},{"attributes":{},"id":"1876","type":"AllLabels"},{"attributes":{},"id":"1852","type":"PanTool"},{"attributes":{"axis":{"id":"1845"},"ticker":null},"id":"1847","type":"Grid"},{"attributes":{"fill_alpha":{"value":0.7},"fill_color":{"value":"green"},"line_alpha":{"value":0.7},"line_color":{"value":"green"},"top":{"field":"Total"},"width":{"value":0.7},"x":{"field":"hour"}},"id":"1902","type":"VBar"},{"attributes":{},"id":"1880","type":"UnionRenderers"},{"attributes":{},"id":"1878","type":"BasicTickFormatter"},{"attributes":{},"id":"1839","type":"DataRange1d"}],"root_ids":["1835"]},"title":"Bokeh Application","version":"2.3.1"}}
+        </script>
+
+        <!-- Folium Interactive Maps Script -->
+        <script src="js/folium.js"></script> 
+</body>
+</html>
